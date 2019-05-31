@@ -14,13 +14,13 @@ public class PlaneTest {
 
     @Test
     public void planeHasCapacity() {
-        PlaneType planeType = plane.getPlaneType();
-        assertEquals(330, planeType.getCapacity());
+        assertEquals(330, plane.getCapacity());
     }
 
     @Test
     public void planeStartsWithWeight() {
-        PlaneType planeType = plane.getPlaneType();
-        assertEquals(150000, planeType.getWeight());
+        assertEquals(150000, plane.getWeight());
     }
+
+
 }

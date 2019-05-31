@@ -59,4 +59,12 @@ public class Flight {
         int capacity = planeType.getCapacity();
         return capacity - this.getPassengerNumbers();
     }
+
+    public int getNumberOfBags() {
+        int total = 0;
+        for (Passenger passenger : passengers) {
+            total += passenger.getNumberOfBags();
+        }
+        return total;
+    }
 }

@@ -70,4 +70,10 @@ public class FlightTest {
         Passenger passenger3 = new Passenger("John", 2);
         assertFalse(flight.bookPassenger(passenger3));
     }
+
+    @Test
+    public void canGetPassengerBagNumbers() {
+        flight.bookPassenger(passenger);
+        assertEquals(2, flight.getNumberOfBags());
+    }
 }
