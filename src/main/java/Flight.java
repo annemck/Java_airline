@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Flight {
 
     private Plane plane;
@@ -5,6 +7,7 @@ public class Flight {
     private String destination;
     private String departureAirport;
     private String departureTime;
+    private ArrayList<Passenger> passengers;
 
     public Flight(Plane plane,
                   String flightNumber,
@@ -16,6 +19,7 @@ public class Flight {
         this.destination = destination;
         this.departureAirport = departureLocation;
         this.departureTime = departureTime;
+        this.passengers = new ArrayList<Passenger>();
     }
 
     public Plane getPlane() {
@@ -36,5 +40,23 @@ public class Flight {
 
     public String getDepartureTime() {
         return this.departureTime;
+    }
+
+    public int getPassengerNumbers(){
+        return this.passengers.size();
+    }
+
+    public boolean bookPassenger(Passenger passenger) {
+        if (this.numberOfSeatsAvailable() != 0) {
+            return this.passengers.add(passenger);
+        }
+        return false;
+    }
+
+    public int numberOfSeatsAvailable() {
+        Plane plane = this.getPlane();
+        PlaneType planeType = plane.getPlaneType();
+        int capacity = planeType.getCapacity();
+        return capacity - this.getPassengerNumbers();
     }
 }

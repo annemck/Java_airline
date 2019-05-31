@@ -1,12 +1,13 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class FlightTest {
 
-    private Plane plane = new Plane(PlaneType.BOEING737);
+    private Plane plane = new Plane(PlaneType.TESTPLANE);
     private Flight flight;
+    private Passenger passenger;
 
     @Before
     public void setup() {
@@ -15,6 +16,7 @@ public class FlightTest {
                 "LDN",
                 "GLA",
                 "13:20");
+        this.passenger = new Passenger("Joe", 2);
     }
 
     @Test
@@ -40,5 +42,32 @@ public class FlightTest {
     @Test
     public void flightHasDepartureTime() {
         assertEquals("13:20", flight.getDepartureTime());
+    }
+
+    @Test
+    public void passengerListStartsEmpty() {
+        assertEquals(0, flight.getPassengerNumbers());
+    }
+
+    @Test
+    public void canBookPassengerOnFlight() {
+        assertTrue(flight.bookPassenger(passenger));
+        assertEquals(1, flight.getPassengerNumbers());
+    }
+
+    @Test
+    public void canGetNumberOfAvailableSeats() {
+        assertEquals(2, flight.numberOfSeatsAvailable());
+        flight.bookPassenger(passenger);
+        assertEquals(1, flight.numberOfSeatsAvailable());
+    }
+
+    @Test
+    public void cannotBookPassengerOnFullFlight() {
+        flight.bookPassenger(passenger);
+        Passenger passenger2 = new Passenger("Mary", 1);
+        flight.bookPassenger(passenger2);
+        Passenger passenger3 = new Passenger("John", 2);
+        assertFalse(flight.bookPassenger(passenger3));
     }
 }
