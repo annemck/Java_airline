@@ -33,15 +33,15 @@ public class FlightManagerTest {
 
     @Test
     public void canGetRemainingWeightAvailableForBags() {
-        flightManager.getFlight().bookPassenger(passenger);
+        flightManager.bookFlight(passenger);
         assertEquals(10, flightManager.getRemainingBaggageWeight());
     }
 
     @Test
     public void canSortPassengersBySeat() {
-        flightManager.getFlight().bookPassenger(passenger);
+        flightManager.bookFlight(passenger);
         Passenger passenger2 = new Passenger("Mary", 0);
-        flightManager.getFlight().bookPassenger(passenger2);
+        flightManager.bookFlight(passenger2);
         flightManager.sortPassengers();
         Passenger firstSeat;
         if (passenger.getSeat()< passenger2.getSeat()){
@@ -54,7 +54,7 @@ public class FlightManagerTest {
     public void canFindPassengerBySeatNumber() {
         flightManager.getFlight().bookPassenger(passenger);
         Passenger passenger2 = new Passenger("mary", 0);
-        flightManager.getFlight().bookPassenger(passenger2);
+        flightManager.bookFlight(passenger2);
         int seat = passenger.getSeat();
         assertEquals(passenger, flightManager.getPassenger(seat));
     }

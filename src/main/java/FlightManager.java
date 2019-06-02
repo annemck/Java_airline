@@ -80,6 +80,9 @@ public class FlightManager {
             shortList = new ArrayList<Passenger>(passengers.subList(0, midIndex));
         }
         return binarySearch(shortList, seat);
+    }
 
+    public void bookFlight(Passenger passenger){
+        this.getFlight().bookPassenger(passenger);
     }
 }
