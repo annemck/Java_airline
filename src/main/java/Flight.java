@@ -1,4 +1,10 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+//import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+
 
 public class Flight {
 
@@ -6,8 +12,9 @@ public class Flight {
     private String flightNumber;
     private String destination;
     private String departureAirport;
-    private String departureTime;
+    private Date departureTime;
     private ArrayList<Passenger> passengers;
+    private ArrayList<Integer> seats;
 
     public Flight(Plane plane,
                   String flightNumber,
@@ -18,8 +25,27 @@ public class Flight {
         this.flightNumber = flightNumber;
         this.destination = destination;
         this.departureAirport = departureLocation;
-        this.departureTime = departureTime;
+        SimpleDateFormat time = new SimpleDateFormat("hh:mm");
+        try {
+            this.departureTime = time.parse(departureTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         this.passengers = new ArrayList<Passenger>();
+        this.populateSeats();
+    }
+
+    private void populateSeats() {
+        Plane plane = this.getPlane();
+        int capacity = plane.getCapacity();
+        this.seats = new ArrayList<Integer>(capacity);
+        for (int seat = 1; seat <= capacity; seat++){
+            this.seats.add(seat);
+        }
+    }
+
+    public int getTotalNumberOfSeats(){
+        return this.seats.size();
     }
 
     public Plane getPlane() {
@@ -38,19 +64,36 @@ public class Flight {
         return this.departureAirport;
     }
 
+//    Don't quite understand where the string is coming from here, but changed it to string due to IDE alerts.
     public String getDepartureTime() {
-        return this.departureTime;
+        Date date = this.departureTime;
+        String time = new SimpleDateFormat("HH:mm").format(date);
+        return time;
     }
 
     public int getPassengerNumbers(){
         return this.passengers.size();
     }
 
+    public ArrayList<Passenger> getPassengers() {
+        return this.passengers;
+    }
+
     public boolean bookPassenger(Passenger passenger) {
         if (this.numberOfSeatsAvailable() != 0) {
+            this.assignSeat(passenger);
+            passenger.addFlight(this);
             return this.passengers.add(passenger);
         }
         return false;
+    }
+
+    private void assignSeat(Passenger passenger) {
+        Random number = new Random();
+        int index = number.nextInt(this.seats.size());
+        int seat = this.seats.get(index);
+        this.seats.remove(index);
+        passenger.addSeat(seat);
     }
 
     public int numberOfSeatsAvailable() {
