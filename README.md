@@ -1,6 +1,3 @@
-# Java_airline
-week 11 weekend homework
-
 # Java Airline
 
 A CodeClan homework for testing the essentials of Java learned in week 11. This was to model an online travel booking company.
